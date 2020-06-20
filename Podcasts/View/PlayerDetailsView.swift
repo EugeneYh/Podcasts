@@ -122,6 +122,28 @@ class PlayerDetailsView: UIView {
             self.handleNextTrack()
             return .success
         }
+        commandCenter.previousTrackCommand.isEnabled = true
+        commandCenter.previousTrackCommand.addTarget { (_) -> MPRemoteCommandHandlerStatus in
+            self.handlePreviousTrack()
+            return .success
+        }
+    }
+    
+    fileprivate func handlePreviousTrack() {
+        let previousEpisode: Episode
+        if playlistEpisodes.count == 0 {
+            return
+        }
+        let currentIndex = playlistEpisodes.firstIndex { (ep) -> Bool in
+            return self.episode?.author == ep.author && episode?.title == ep.title
+        }
+        guard let index = currentIndex else { return }
+        if index == 0 {
+            previousEpisode = playlistEpisodes[0]
+        } else {
+            previousEpisode = playlistEpisodes[index - 1]
+        }
+        self.episode = previousEpisode
     }
     
     fileprivate func handleNextTrack() {
@@ -129,24 +151,16 @@ class PlayerDetailsView: UIView {
         if playlistEpisodes.count == 0 {
             return
         }
-        
         let currentIndex = playlistEpisodes.lastIndex { (ep) -> Bool in
             return self.episode?.title == ep.title && self.episode?.author == ep.author
         }
-        
         guard let index = currentIndex else {return}
-        
         if index == self.playlistEpisodes.count - 1 {
             nextEpisode = playlistEpisodes[0]
         } else {
             nextEpisode = playlistEpisodes[index + 1]
         }
-        
         self.episode = nextEpisode
-        
-        
-        
-        
     }
     
     fileprivate func setupAudioSession() {
