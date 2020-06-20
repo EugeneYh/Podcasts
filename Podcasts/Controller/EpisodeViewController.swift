@@ -70,15 +70,8 @@ extension EpisodeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let episode = self.episodes[indexPath.row]
         let mainTabBarController = UIApplication.shared.windows.filter{$0.isKeyWindow}.first?.rootViewController as! MainTabBarController
-        mainTabBarController.maximizePlayerDetailsView(episode: episode)
+        mainTabBarController.maximizePlayerDetailsView(episode: episode, playlistEpisodes: self.episodes)
         
-        
-//        //TODO: make a mormal controller for this instead
-//        let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-//        let playerDetailsView = PlayerDetailsView.initFromNib()
-//        playerDetailsView.episode = episode
-//        playerDetailsView.frame = self.view.frame
-//        window?.addSubview(playerDetailsView)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
