@@ -111,7 +111,6 @@ class PlayerDetailsView: UIView {
                 miniPlayerPlayPauseButtonLabel.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
             }
         }
-        
     }
     
     fileprivate func setupRemoteControl() {
