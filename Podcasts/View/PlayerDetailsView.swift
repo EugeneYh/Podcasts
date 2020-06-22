@@ -17,6 +17,7 @@ class PlayerDetailsView: UIView {
             titleLabel.text = episode?.title
             miniPlayerTitleLable.text = episode?.title
             authorLabel.text = episode?.author
+            setupAudioSession()
             playEpisode()
             setupNowPlayingInfo()
             guard let url = URL(string: episode?.imageUrl ?? "") else {return}
@@ -84,11 +85,33 @@ class PlayerDetailsView: UIView {
     // MARK: - AwakeFromNib
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupAudioSession()
+        setupInterruptionObserver()
         setupRemoteControl()
         setupGestureRecognizer()
         observePlayerCurrentTime()
         observeBoundaryTime()
+    }
+    
+    fileprivate func setupInterruptionObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption), name: .AVCaptureSessionWasInterrupted, object: nil)
+    }
+    
+    @objc fileprivate func handleInterruption(notification: Notification) {
+        guard let userInfo = notification.userInfo else {return}
+        guard let type = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt else {return}
+        
+        if type == AVAudioSession.InterruptionType.began.rawValue {
+            playePauseButtonLabel.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            miniPlayerPlayPauseButtonLabel.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+        } else {
+            guard let options = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else {return}
+            if options == AVAudioSession.InterruptionOptions.shouldResume.rawValue {
+                player.play()
+                playePauseButtonLabel.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+                miniPlayerPlayPauseButtonLabel.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            }
+        }
+        
     }
     
     fileprivate func setupRemoteControl() {
@@ -101,7 +124,7 @@ class PlayerDetailsView: UIView {
             self.player.play()
             self.playePauseButtonLabel.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
             self.miniPlayerPlayPauseButtonLabel.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-            self.setupLockScreenElapsedTime()
+            self.setupLockScreenElapsedTime(playbackRate: 1)
             return .success
         }
         commandCenter.pauseCommand.isEnabled = true
@@ -109,7 +132,7 @@ class PlayerDetailsView: UIView {
             self.player.pause()
             self.playePauseButtonLabel.setImage(#imageLiteral(resourceName: "play"), for: .normal)
             self.miniPlayerPlayPauseButtonLabel.setImage(#imageLiteral(resourceName: "play"), for: .normal)
-            self.setupLockScreenElapsedTime()
+            self.setupLockScreenElapsedTime(playbackRate: 0)
             return .success
         }
         commandCenter.togglePlayPauseCommand.isEnabled = true
@@ -267,17 +290,20 @@ class PlayerDetailsView: UIView {
             playePauseButtonLabel.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
             miniPlayerPlayPauseButtonLabel.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
             enlargeEpisodeImageView()
+            setupLockScreenElapsedTime(playbackRate: 1)
         } else {
             player.pause()
             playePauseButtonLabel.setImage(#imageLiteral(resourceName: "play"), for: .normal)
             miniPlayerPlayPauseButtonLabel.setImage(#imageLiteral(resourceName: "play"), for: .normal)
             shrinkEpisodeImageView(for: episodeImageView)
             shrinkEpisodeImageView(for: miniPlayerPlayPauseButtonLabel.imageView!)
+            setupLockScreenElapsedTime(playbackRate: 0)
         }
     }
     
-    fileprivate func setupLockScreenElapsedTime() {
+    fileprivate func setupLockScreenElapsedTime(playbackRate: Float) {
         MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = CMTimeGetSeconds(player.currentTime())
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyPlaybackRate] = playbackRate
     }
     
     fileprivate func seekToCurrentTime(delta: Int64) {
