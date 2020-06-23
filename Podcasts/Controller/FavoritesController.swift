@@ -9,13 +9,11 @@
 import UIKit
 
 class FavoritesController: UICollectionViewController {
-    
-    let cellId = "cellId"
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.backgroundColor = .blue
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.backgroundColor = .white
+        collectionView.register(FavoriteCell.self, forCellWithReuseIdentifier: FavoriteCell.cellId)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -23,8 +21,7 @@ class FavoritesController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        cell.backgroundColor = .red
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCell.cellId, for: indexPath) as! FavoriteCell
         return cell
     }
     
@@ -35,7 +32,7 @@ class FavoritesController: UICollectionViewController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
     }
-}s
+}
 
 extension FavoritesController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
