@@ -37,6 +37,6 @@ class FavoritesController: UICollectionViewController {
 extension FavoritesController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (view.frame.width - 3*16) / 2
-        return .init(width: width, height: width)
+        return .init(width: width, height: width + 48)
     }
 }

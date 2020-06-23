@@ -11,6 +11,7 @@ import FeedKit
 
 class EpisodeViewController: UIViewController {
     
+    let favoritesPodcastKey = "favoritesPodcastKey"
     let tableView = UITableView(frame: .zero, style: .plain)
     let cellId = "cellId"
     var episodes = [Episode]()
@@ -36,6 +37,36 @@ class EpisodeViewController: UIViewController {
         view.backgroundColor = .white
         setupTableView()
         setupView()
+        setupNavigationBarButtons()
+    }
+    
+    fileprivate func setupNavigationBarButtons() {
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(title: "Favorites", style: .plain, target: self, action: #selector(handleSaveFavorites)),
+            UIBarButtonItem(title: "Fetch", style: .plain, target: self, action: #selector(handleFetchSavedFavorites))
+        ]
+    }
+    
+    @objc fileprivate func handleSaveFavorites() {
+        print("Add to Favorites")
+        guard let podcast = self.podcast else {return}
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: podcast, requiringSecureCoding: false)
+            UserDefaults.standard.set(data, forKey: "favoritesPodcastKey")
+        } catch let encodingError {
+            print("Failed to encode data, ", encodingError)
+        } 
+    }
+    
+    @objc fileprivate func handleFetchSavedFavorites() {
+        print("Fetch Favorites")
+        guard let data = UserDefaults.standard.data(forKey: "favoritesPodcastKey") else {return}
+        do {
+            let podcast = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Podcast
+            print(podcast?.trackName, podcast?.artistName)
+        } catch let decodingError {
+            print("Failed to decode data, ", decodingError)
+        }
     }
     
     fileprivate func setupTableView() {

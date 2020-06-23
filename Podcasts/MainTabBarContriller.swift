@@ -54,17 +54,12 @@ class MainTabBarController: UITabBarController {
     
     fileprivate func setupPlayerDetailsView() {
         playerDetailsView.translatesAutoresizingMaskIntoConstraints = false
-        
         view.insertSubview(playerDetailsView, belowSubview: tabBar)
-        
         maximizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
         bottomAnchor =  playerDetailsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height)
-        
         bottomAnchor.isActive = true
         maximizedTopAnchorConstraint.isActive = true
-        
         minimizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -64)
-        
         playerDetailsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         playerDetailsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
@@ -72,8 +67,8 @@ class MainTabBarController: UITabBarController {
     fileprivate func setupViewControllers() {
         let layout = UICollectionViewFlowLayout()
         viewControllers = [
-            generateNavController(for: FavoritesController(collectionViewLayout: layout), title: "Favorites", image: #imageLiteral(resourceName: "favorites")),
             generateNavController(for: PodcastsSearchController(), title: "Search", image: #imageLiteral(resourceName: "search")),
+            generateNavController(for: FavoritesController(collectionViewLayout: layout), title: "Favorites", image: #imageLiteral(resourceName: "favorites")),
             generateNavController(for: PodcastsSearchController(), title: "Downloads", image: #imageLiteral(resourceName: "downloads"))
         ]
     }
