@@ -11,7 +11,6 @@ import FeedKit
 
 class EpisodeViewController: UIViewController {
     
-    let favoritesPodcastKey = "favoritesPodcastKey"
     let tableView = UITableView(frame: .zero, style: .plain)
     let cellId = "cellId"
     var episodes = [Episode]()
@@ -50,9 +49,16 @@ class EpisodeViewController: UIViewController {
     @objc fileprivate func handleSaveFavorites() {
         print("Add to Favorites")
         guard let podcast = self.podcast else {return}
+        var podcastsList = [Podcast]()
+        
+        // Fetsh already saved podcasts
+        podcastsList = UserDefaults.standard.fetchSavedPodcasts()
+        
+        // Save podcast to Favorites
         do {
-            let data = try NSKeyedArchiver.archivedData(withRootObject: podcast, requiringSecureCoding: false)
-            UserDefaults.standard.set(data, forKey: "favoritesPodcastKey")
+            podcastsList.append(podcast)
+            let data = try NSKeyedArchiver.archivedData(withRootObject: podcastsList, requiringSecureCoding: false)
+            UserDefaults.standard.set(data, forKey: UserDefaults.favoritesPodcastKey)
         } catch let encodingError {
             print("Failed to encode data, ", encodingError)
         } 
@@ -60,10 +66,12 @@ class EpisodeViewController: UIViewController {
     
     @objc fileprivate func handleFetchSavedFavorites() {
         print("Fetch Favorites")
-        guard let data = UserDefaults.standard.data(forKey: "favoritesPodcastKey") else {return}
+        guard let data = UserDefaults.standard.data(forKey: UserDefaults.favoritesPodcastKey) else {return}
         do {
-            let podcast = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Podcast
-            print(podcast?.trackName, podcast?.artistName)
+            let podcastsList = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [Podcast]
+            podcastsList?.forEach({ (p) in
+                print(p.artistName ?? "")
+            })
         } catch let decodingError {
             print("Failed to decode data, ", decodingError)
         }
