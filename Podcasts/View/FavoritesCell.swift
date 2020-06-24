@@ -11,6 +11,15 @@ import UIKit
 class FavoriteCell: UICollectionViewCell {
     static let cellId = String.init(describing: self)
     
+    var podcast: Podcast? {
+        didSet{
+            nameLabel.text = podcast?.artistName ?? ""
+            artistNameLabel.text = podcast?.artistName ?? ""
+            guard let url = URL(string: podcast?.artworkUrl60 ?? "") else {return}
+            imageView.sd_setImage(with: url)
+        }
+    }
+    
     let imageView: UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "appicon")

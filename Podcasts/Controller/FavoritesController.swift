@@ -9,6 +9,7 @@
 import UIKit
 
 class FavoritesController: UICollectionViewController {
+    let podcasts = UserDefaults.standard.fetchSavedPodcasts()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,11 +18,12 @@ class FavoritesController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return podcasts.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCell.cellId, for: indexPath) as! FavoriteCell
+        cell.podcast = podcasts[indexPath.item]
         return cell
     }
     
