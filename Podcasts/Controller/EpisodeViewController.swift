@@ -40,10 +40,30 @@ class EpisodeViewController: UIViewController {
     }
     
     fileprivate func setupNavigationBarButtons() {
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(title: "Favorites", style: .plain, target: self, action: #selector(handleSaveFavorites)),
-            UIBarButtonItem(title: "Fetch", style: .plain, target: self, action: #selector(handleFetchSavedFavorites))
-        ]
+        let savedPodcasts = UserDefaults.standard.fetchSavedPodcasts()
+        let hasFavorited = savedPodcasts.contains { (p) -> Bool in
+            if p.artistName == self.podcast?.artistName && p.trackName == self.podcast?.trackName {
+                return true
+            } else {
+                return false
+            }
+        }
+        if hasFavorited {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "heart").withTintColor(.purple, renderingMode: .alwaysOriginal), style: .plain, target: nil, action: nil)
+        } else {
+            navigationItem.rightBarButtonItems = [
+                UIBarButtonItem(title: "Favorites", style: .plain, target: self, action: #selector(handleSaveFavorites)),
+            ]
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .normal, title: "Dowload") { (_, _, _) in
+            print("Download podcast")
+            let episode = self.episodes[indexPath.row]
+            UserDefaults.standard.downloadEpisode(episode: episode)
+        }
+        return UISwipeActionsConfiguration.init(actions: [action])
     }
     
     @objc fileprivate func handleSaveFavorites() {
@@ -59,9 +79,18 @@ class EpisodeViewController: UIViewController {
             podcastsList.append(podcast)
             let data = try NSKeyedArchiver.archivedData(withRootObject: podcastsList, requiringSecureCoding: false)
             UserDefaults.standard.set(data, forKey: UserDefaults.favoritesPodcastKey)
+            showBadgeHighlight()
         } catch let encodingError {
             print("Failed to encode data, ", encodingError)
         } 
+    }
+    
+    fileprivate func showBadgeHighlight() {
+        let tabBarController = UIApplication.shared.windows.filter({$0.isKeyWindow}).first
+        guard let mainTabBarController = tabBarController?.rootViewController as? MainTabBarController else {return}
+        mainTabBarController.viewControllers?[1].tabBarItem.badgeValue = "New"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "heart").withTintColor(.purple, renderingMode: .alwaysOriginal), style: .plain, target: nil, action: nil)
+
     }
     
     @objc fileprivate func handleFetchSavedFavorites() {

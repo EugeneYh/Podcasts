@@ -9,12 +9,53 @@
 import UIKit
 
 class FavoritesController: UICollectionViewController {
-    let podcasts = UserDefaults.standard.fetchSavedPodcasts()
+    var podcasts = UserDefaults.standard.fetchSavedPodcasts()
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupCollectionView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        podcasts = UserDefaults.standard.fetchSavedPodcasts()
+        let tabBarController = UIApplication.shared.windows.filter({$0.isKeyWindow}).first
+        guard let mainTabBarController = tabBarController?.rootViewController as? MainTabBarController else {return}
+        mainTabBarController.viewControllers?[1].tabBarItem.badgeValue = nil
+        collectionView.reloadData()
+    }
+    
+    fileprivate func setupCollectionView() {
         collectionView.backgroundColor = .white
         collectionView.register(FavoriteCell.self, forCellWithReuseIdentifier: FavoriteCell.cellId)
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGestureRecognizer))
+        collectionView.addGestureRecognizer(longPressGestureRecognizer)
+    }
+    
+    @objc fileprivate func handleLongPressGestureRecognizer(gesture: UILongPressGestureRecognizer) {
+        let coordinates = gesture.location(in: collectionView.self)
+        guard let selectedCellIndex = collectionView.indexPathForItem(at: coordinates) else {return}
+        
+        let alertController = UIAlertController(title: "Remove Podcast?", message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (_) in
+            self.podcasts.remove(at: selectedCellIndex.item)
+            do {
+                let data = try NSKeyedArchiver.archivedData(withRootObject: self.podcasts, requiringSecureCoding: false)
+                UserDefaults.standard.set(data, forKey: UserDefaults.favoritesPodcastKey)
+            } catch let error {
+                print(error)
+            }
+            self.collectionView.deleteItems(at: [selectedCellIndex])
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alertController, animated: true)
+        
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let episodesController = EpisodeViewController()
+        episodesController.podcast = podcasts[indexPath.item]
+        navigationController?.pushViewController(episodesController, animated: true)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
