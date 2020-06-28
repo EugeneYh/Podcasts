@@ -58,10 +58,11 @@ class EpisodeViewController: UIViewController {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .normal, title: "Dowload") { (_, _, _) in
+        let action = UIContextualAction(style: .normal, title: "Dowload") { (_, _, success) in
             print("Download podcast")
             let episode = self.episodes[indexPath.row]
             UserDefaults.standard.downloadEpisode(episode: episode)
+            success(true)
         }
         return UISwipeActionsConfiguration.init(actions: [action])
     }

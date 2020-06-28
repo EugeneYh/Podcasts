@@ -13,10 +13,20 @@ extension UserDefaults {
     static let favoritesPodcastKey = "favoritesPodcastKey"
     static let downloadEpisodeKey = "downloadPodcast"
     
+    func deleteDownloadedEpisode(episodes: [Episode]) {
+        do {
+            let data = try JSONEncoder().encode(episodes)
+            UserDefaults.standard.setValue(data, forKey: UserDefaults.downloadEpisodeKey)
+        } catch let deleteEpisodeError {
+            print("Failed to delete episode from user defaults", deleteEpisodeError)
+        }
+    }
+    
     func downloadEpisode(episode: Episode) {
         do {
             var downloadedEpisodes = UserDefaults.standard.downloadedEpisodes()
-            downloadedEpisodes.append(episode)
+            //downloadedEpisodes.append(episode)
+            downloadedEpisodes.insert(episode, at: 0)
             let downloadData = try JSONEncoder().encode(downloadedEpisodes)
             UserDefaults.standard.set(downloadData, forKey: UserDefaults.downloadEpisodeKey)
         } catch let downloadErr {
@@ -31,8 +41,8 @@ extension UserDefaults {
             return downloadedEpisodes
         } catch let downloadingError {
             print("Failed to download episodes", downloadingError)
-            return []
         }
+        return []
     }
     
     func fetchSavedPodcasts() -> [Podcast] {

@@ -17,7 +17,6 @@ class DownloadController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupTableView()
     }
     
@@ -26,6 +25,7 @@ class DownloadController: UIViewController {
         downloadedEpisodes = UserDefaults.standard.downloadedEpisodes()
         tableView.reloadData()
     }
+    
     
     fileprivate func setupTableView() {
         
@@ -50,7 +50,6 @@ extension DownloadController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 136
     }
-    
 }
 
 extension DownloadController: UITableViewDataSource {
@@ -62,6 +61,20 @@ extension DownloadController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EpisodeCell
         cell.episode = downloadedEpisodes[indexPath.row]
         return cell
+    }
+    
+    // perform delete downloaded episode:
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, success) in
+            print("Delete item")
+            self.downloadedEpisodes.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            UserDefaults.standard.deleteDownloadedEpisode(episodes: self.downloadedEpisodes)
+            success(true)
+        }
+        let rightSwipeToDelete = UISwipeActionsConfiguration(actions: [deleteAction])
+        return rightSwipeToDelete
     }
     
     
