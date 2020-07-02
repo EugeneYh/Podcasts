@@ -16,6 +16,7 @@ struct Episode: Codable {
     let author: String
     let streamUrl: String
     var imageUrl: String?
+    var fileUrl: String?
     
     init(feedItem: RSSFeedItem) {
         self.title = feedItem.title ?? ""

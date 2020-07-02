@@ -62,6 +62,7 @@ class EpisodeViewController: UIViewController {
             print("Download podcast")
             let episode = self.episodes[indexPath.row]
             UserDefaults.standard.downloadEpisode(episode: episode)
+            APIService.shared.downloadEpisode(episode: episode)
             success(true)
         }
         return UISwipeActionsConfiguration.init(actions: [action])
@@ -140,7 +141,6 @@ extension EpisodeViewController: UITableViewDataSource {
         let episode = self.episodes[indexPath.row]
         let mainTabBarController = UIApplication.shared.windows.filter{$0.isKeyWindow}.first?.rootViewController as! MainTabBarController
         mainTabBarController.maximizePlayerDetailsView(episode: episode, playlistEpisodes: self.episodes)
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

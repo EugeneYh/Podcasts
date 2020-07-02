@@ -15,6 +15,8 @@
 		4465A92424658BF900B50A7E /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465A92324658BF900B50A7E /* Podcast.swift */; };
 		4465A9262465958300B50A7E /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465A9252465958300B50A7E /* UIView+Layout.swift */; };
 		448A2A5724880EC1008048A6 /* PlayerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448A2A5624880EC1008048A6 /* PlayerDetailsView.swift */; };
+		44A8B71524AB5A7E00492D40 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A8B71424AB5A7E00492D40 /* UIApplicationExtension.swift */; };
+		44A8B71724AE6FF800492D40 /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A8B71624AE6FF800492D40 /* NotificationName.swift */; };
 		44AF185A245F12800050BE9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AF1859245F12800050BE9A /* AppDelegate.swift */; };
 		44AF185C245F12800050BE9A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AF185B245F12800050BE9A /* SceneDelegate.swift */; };
 		44AF185E245F12800050BE9A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AF185D245F12800050BE9A /* ContentView.swift */; };
@@ -26,7 +28,7 @@
 		44C53D5124A1046F00B1A530 /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C53D5024A1046E00B1A530 /* FavoritesController.swift */; };
 		44C53D5324A1526E00B1A530 /* FavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C53D5224A1526E00B1A530 /* FavoritesCell.swift */; };
 		44C53D5524A360D500B1A530 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C53D5424A360D500B1A530 /* UserDefaults.swift */; };
-		44C53D5724A4B7BF00B1A530 /* DownloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C53D5624A4B7BF00B1A530 /* DownloadController.swift */; };
+		44C53D5724A4B7BF00B1A530 /* DownloadsController .swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C53D5624A4B7BF00B1A530 /* DownloadsController .swift */; };
 		44CDD840247F02E400D3B82A /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CDD83F247F02E400D3B82A /* APIService.swift */; };
 		44DBCF7F24856630007DA138 /* EpisodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DBCF7E24856630007DA138 /* EpisodeModel.swift */; };
 		44DBCF862485A2EB007DA138 /* EpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DBCF842485A2EB007DA138 /* EpisodeCell.swift */; };
@@ -46,6 +48,8 @@
 		4465A92324658BF900B50A7E /* Podcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
 		4465A9252465958300B50A7E /* UIView+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 		448A2A5624880EC1008048A6 /* PlayerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsView.swift; sourceTree = "<group>"; };
+		44A8B71424AB5A7E00492D40 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
+		44A8B71624AE6FF800492D40 /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		44AF1856245F12800050BE9A /* Podcasts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Podcasts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44AF1859245F12800050BE9A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		44AF185B245F12800050BE9A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,7 +63,7 @@
 		44C53D5024A1046E00B1A530 /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
 		44C53D5224A1526E00B1A530 /* FavoritesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCell.swift; sourceTree = "<group>"; };
 		44C53D5424A360D500B1A530 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		44C53D5624A4B7BF00B1A530 /* DownloadController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadController.swift; sourceTree = "<group>"; };
+		44C53D5624A4B7BF00B1A530 /* DownloadsController .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DownloadsController .swift"; sourceTree = "<group>"; };
 		44CDD83F247F02E400D3B82A /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		44DBCF7E24856630007DA138 /* EpisodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeModel.swift; sourceTree = "<group>"; };
 		44DBCF842485A2EB007DA138 /* EpisodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
@@ -99,7 +103,7 @@
 				44AF186F245F5C990050BE9A /* PodcastsSearchController.swift */,
 				445EF0152482F01200C09C60 /* EpisodeViewController.swift */,
 				44C53D5024A1046E00B1A530 /* FavoritesController.swift */,
-				44C53D5624A4B7BF00B1A530 /* DownloadController.swift */,
+				44C53D5624A4B7BF00B1A530 /* DownloadsController .swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -190,6 +194,8 @@
 				44FD37852486EFAF0054DB0B /* RSSFeed.swift */,
 				44F728DD248E5E870011A92C /* CMTime.swift */,
 				44C53D5424A360D500B1A530 /* UserDefaults.swift */,
+				44A8B71424AB5A7E00492D40 /* UIApplicationExtension.swift */,
+				44A8B71624AE6FF800492D40 /* NotificationName.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -326,13 +332,15 @@
 				44AF186E245F13670050BE9A /* MainTabBarContriller.swift in Sources */,
 				445EF014248116F900C09C60 /* PodcastCell.swift in Sources */,
 				445EF00E2480100700C09C60 /* SearchResultModel.swift in Sources */,
+				44A8B71524AB5A7E00492D40 /* UIApplicationExtension.swift in Sources */,
 				44FD37862486EFAF0054DB0B /* RSSFeed.swift in Sources */,
 				44F728DE248E5E870011A92C /* CMTime.swift in Sources */,
 				44AF185A245F12800050BE9A /* AppDelegate.swift in Sources */,
+				44A8B71724AE6FF800492D40 /* NotificationName.swift in Sources */,
 				44C53D5324A1526E00B1A530 /* FavoritesCell.swift in Sources */,
 				445EF0162482F01200C09C60 /* EpisodeViewController.swift in Sources */,
 				44AF185C245F12800050BE9A /* SceneDelegate.swift in Sources */,
-				44C53D5724A4B7BF00B1A530 /* DownloadController.swift in Sources */,
+				44C53D5724A4B7BF00B1A530 /* DownloadsController .swift in Sources */,
 				44C53D5124A1046F00B1A530 /* FavoritesController.swift in Sources */,
 				4465A92424658BF900B50A7E /* Podcast.swift in Sources */,
 				4465A9262465958300B50A7E /* UIView+Layout.swift in Sources */,

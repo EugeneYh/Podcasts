@@ -14,6 +14,34 @@ import FeedKit
 class APIService {
     static let shared = APIService()
     
+    typealias EpisodeDownloadCompleteTuple = (fileUrl: String, episodeTitle: String)
+    
+    func downloadEpisode(episode: Episode) {
+            
+        let destination = DownloadRequest.suggestedDownloadDestination(for: .documentDirectory, in: .userDomainMask, options: .removePreviousFile)
+        
+        AF.download(episode.streamUrl, to: destination).downloadProgress { (progress) in
+            
+            NotificationCenter.default.post(name: .downloadProgress, object: nil, userInfo: ["title": episode.title, "progress": progress.fractionCompleted])
+    
+        }.response { (response) in
+            print(response.fileURL?.absoluteString ?? "")
+            
+            let episodeDownloadComplete = EpisodeDownloadCompleteTuple(fileUrl: response.fileURL?.absoluteString ?? "", episode.title)
+            NotificationCenter.default.post(name: .downloadComplete, object: episodeDownloadComplete, userInfo: nil)
+            var downloadedEpisodes = UserDefaults.standard.downloadedEpisodes()
+            guard let index = downloadedEpisodes.firstIndex(where: {$0.author == episode.author && $0.title == episode.title}) else {return}
+        
+            downloadedEpisodes[index].fileUrl = response.fileURL?.absoluteString ?? ""
+            do {
+                let data = try JSONEncoder().encode(downloadedEpisodes)
+                UserDefaults.standard.set(data, forKey: UserDefaults.downloadEpisodeKey)
+            }catch let error {
+                print(error)
+            }
+        }
+    }
+    
     func fetchEpisodes(from feedUrl: String, completionHandler: @escaping ([Episode]) -> ()) {
         
         guard let url = URL(string: feedUrl) else {return}

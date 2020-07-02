@@ -24,6 +24,7 @@ class EpisodeCell: UITableViewCell {
         }
     }
     
+    @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var episodeImageView: UIImageView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
@@ -32,6 +33,7 @@ class EpisodeCell: UITableViewCell {
             descriptionLabel.numberOfLines = 2
         }
     }
+    
     
     
 }

@@ -46,12 +46,21 @@
                             </label>
                         </subviews>
                     </stackView>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqq-AO-bqN">
+                        <rect key="frame" x="33" y="70.5" width="66.5" height="31"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <size key="shadowOffset" width="1" height="-2"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="eOr-h3-Opv" secondAttribute="trailing" id="2Bb-Vj-sFP"/>
                     <constraint firstItem="nf7-km-ByD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="BFW-UU-kav"/>
                     <constraint firstItem="eOr-h3-Opv" firstAttribute="leading" secondItem="nf7-km-ByD" secondAttribute="trailing" constant="8" id="CKo-oa-R3f"/>
+                    <constraint firstItem="mqq-AO-bqN" firstAttribute="centerY" secondItem="nf7-km-ByD" secondAttribute="centerY" id="ChA-uh-kJN"/>
                     <constraint firstItem="eOr-h3-Opv" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="HOR-pA-x9n"/>
+                    <constraint firstItem="mqq-AO-bqN" firstAttribute="centerX" secondItem="nf7-km-ByD" secondAttribute="centerX" id="Vts-2D-HWr"/>
                     <constraint firstItem="nf7-km-ByD" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="qwi-4Z-GXz"/>
                 </constraints>
             </tableViewCellContentView>
@@ -60,6 +69,7 @@
                 <outlet property="dateLabel" destination="Rio-Cv-1vc" id="ETi-MS-ver"/>
                 <outlet property="descriptionLabel" destination="t0N-Pe-lcq" id="Max-y2-KuE"/>
                 <outlet property="episodeImageView" destination="nf7-km-ByD" id="BEG-fY-ldl"/>
+                <outlet property="progressLabel" destination="mqq-AO-bqN" id="oAz-rX-J5O"/>
                 <outlet property="titleLabel" destination="gxA-kJ-dNn" id="tXJ-Fb-SGv"/>
             </connections>
             <point key="canvasLocation" x="-113.04347826086958" y="46.205357142857139"/>
